@@ -13,3 +13,9 @@ B
 app/api/routers.py,e/5/e5d69fbb9e2968ee08c1e9507d6487d9213764ef
 C
 app/api/__init__.py,4/0/407bde4b68f04669686373519bb18966abda13b9
+@
+app/crud/base.py,5/a/5afee768463b00afa87804306c2eceb8b0c6dad7
+4
+.env,3/c/3c84dcdc6bbe3d7817c49dcdc327b926fea1808a
+9
+	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
