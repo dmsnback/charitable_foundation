@@ -21,23 +21,7 @@ class CRUDCharityProject(CRUDBase):
                 CharityProject.name == project_name
             )
         )
-
         return db_project_id.scalars().first()
-
-    async def get_charity_project_by_id(
-            self,
-            project_id: int,
-            session: AsyncSession
-    ) -> Optional[CharityProject]:
-        """Получения объекта по ID """
-
-        db_project = await session.execute(
-            select(CharityProject).where(
-                CharityProject.id == project_id
-            )
-        )
-
-        return db_project.scalars().first()
 
     async def get_projects_by_completion_rate(
             self,
@@ -50,7 +34,6 @@ class CRUDCharityProject(CRUDBase):
                 CharityProject.fully_invested == 1
             ).order_by(CharityProject.close_date - CharityProject.create_date)
         )
-
         return db_project.scalars().all()
 
 

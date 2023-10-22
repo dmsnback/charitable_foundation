@@ -1,6 +1,12 @@
+from typing import Optional
+
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.models import CharityProject, Donation, User
+from app.schemas.donation import DonationDB
+from app.schemas.charity_project import CharityProjectDB
 
 
 class CRUDBase:
@@ -31,12 +37,17 @@ class CRUDBase:
             self,
             obj_in,
             session: AsyncSession,
+            user: Optional[User] = None,
+            commit: bool = True
     ):
         obj_in_data = obj_in.dict()
+        if user:
+            obj_in_data['user_id'] = user.id
         db_obj = self.model(**obj_in_data)
         session.add(db_obj)
-        await session.commit()
-        await session.refresh(db_obj)
+        if commit:
+            await session.commit()
+            await session.refresh(db_obj)
         return db_obj
 
     async def update(
@@ -47,7 +58,6 @@ class CRUDBase:
     ):
         obj_data = jsonable_encoder(db_obj)
         update_data = obj_in.dict(exclude_unset=True)
-
         for field in obj_data:
             if field in update_data:
                 setattr(db_obj, field, update_data[field])
@@ -64,3 +74,30 @@ class CRUDBase:
         await session.delete(db_obj)
         await session.commit()
         return db_obj
+
+    async def get_charity_project_by_id(
+            self,
+            project_id: int,
+            session: AsyncSession
+    ) -> Optional[CharityProject]:
+        """Получения объекта по ID """
+
+        db_project = await session.execute(
+            select(CharityProject).where(
+                CharityProject.id == project_id
+            )
+        )
+        return db_project.scalars().first()
+
+    async def get_open_objects(
+        self,
+        obj_in,
+        session: AsyncSession,
+    ):
+        objects = await session.execute(
+            select(obj_in).where(
+                obj_in.fully_invested == 0
+            ).order_by(obj_in.create_date)
+        )
+
+        return objects.scalars().all()

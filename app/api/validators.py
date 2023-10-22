@@ -5,16 +5,15 @@ from app.crud.charity_project import charity_project_crud
 from app.models import CharityProject
 
 
-async def check_none(
-        obj: str,
-        session: AsyncSession,
+def check_none(
+        obj: str
 ) -> None:
     """Проверка на пустое поле"""
 
     if obj is None:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail='Поле не может быть пустым'
+            detail=f'Поле {obj} не может быть пустым'
         )
 
 

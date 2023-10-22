@@ -1,4 +1,4 @@
-<a name="Начало"></a>
+[](#Начало)
 
 # Приложение QRKot 
 
@@ -7,7 +7,8 @@
 - [Запуск](#Запуск)
 - [Автор](#Автор)
 
-<a name="Описание"></a>
+
+## Описание
 
 __QRKot__ - приложение для Благотворительного фонда поддержки котиков.
 
@@ -28,18 +29,19 @@ __QRKot__ - приложение для Благотворительного ф�
 Любой пользователь может видеть список всех проектов, включая требуемые и уже внесенные суммы. Это касается всех проектов — и открытых, и закрытых.
 Зарегистрированные пользователи могут отправлять пожертвования и просматривать список своих пожертвований.
 
-<a name="Технологии"></a>
 
 #
 
 ### Технологии
 
-[![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)](https://www.python.org)
-![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
+![Static Badge](https://img.shields.io/badge/python-gray?style=for-the-badge&logo=Python&link=https%3A%2F%2Fwww.python.org)
+![Static Badge](https://img.shields.io/badge/FastAPI-gray?style=for-the-badge&logo=fastapi&link=https%3A%2F%2Ffastapi.tiangolo.com)
+![Static Badge](https://img.shields.io/badge/FastAPI-users-gray?style=for-the-badge&logo=fastapi&link=https%3A%2F%2Ffastapi.tiangolo.com)
+![Static Badge](https://img.shields.io/badge/SQLAlchemy-gray?style=for-the-badge&logo=alchemy&link=https%3A%2F%2Fwww.sqlalchemy.org)
+![Static Badge](https://img.shields.io/badge/Pydantic-gray?style=for-the-badge&logo=pydantic&link=https%3A%2F%2Fdocs.pydantic.dev%2Flatest%2F)
+![Static Badge](https://img.shields.io/badge/aioGoogle-gray?style=for-the-badge&logo=google&link=https%3A%2F%2Faiogoogle.readthedocs.io%2Fen%2Flatest%2F)
 
-#
 
-<a name="Запуск"></a>
 ### Запуск
 
 - __Склонируйте репозиторий__
@@ -125,7 +127,7 @@ uvicorn app.main:app --reload
 
 
 #
-<a name="Автор"></a>
+
 
 ### Автор
 
