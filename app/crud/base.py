@@ -4,9 +4,7 @@ from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import CharityProject, Donation, User
-from app.schemas.donation import DonationDB
-from app.schemas.charity_project import CharityProjectDB
+from app.models import CharityProject, User
 
 
 class CRUDBase:

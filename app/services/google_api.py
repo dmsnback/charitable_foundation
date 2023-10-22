@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List, Tuple, Any
+from typing import List, Any
 
 from aiogoogle import Aiogoogle
 
@@ -11,25 +11,24 @@ FORMAT = "%Y/%m/%d %H:%M:%S"
 ROW_COUNT = 100
 COLUMN_COUNT = 11
 SPREADSHEET_BODY = {
-        'properties': {
-            'title': 'Отчет от',
-            'locale': 'ru_RU'
-        },
-        'sheets': [
-            {
-                'properties': {
-                    'sheetType': 'GRID',
-                    'sheetId': 0,
-                    'title': 'Лист1',
-                    'gridProperties': {
-                        'rowCount': ROW_COUNT,
-                        'columnCount': COLUMN_COUNT
-                    }
+    'properties': {
+        'title': 'Отчет от',
+        'locale': 'ru_RU'
+    },
+    'sheets': [
+        {
+            'properties': {
+                'sheetType': 'GRID',
+                'sheetId': 0,
+                'title': 'Лист1',
+                'gridProperties': {
+                    'rowCount': ROW_COUNT,
+                    'columnCount': COLUMN_COUNT
                 }
             }
-        ]
-    }
-
+        }
+    ]
+}
 TABLE_VALUES = [
     ['Отчет от', ],
     ['Топ проектов по скорости закрытия'],
@@ -84,10 +83,9 @@ async def spreadsheets_update_value(
     table_values = [
         *table_value,
         *[list(map(str,
-                  [project.name,
-                   project.close_date - project.create_date,
-                   project.description])) for project in projects
-          ]
+                   [project.name,
+                    project.close_date - project.create_date,
+                    project.description])) for project in projects]
     ]
     update_body = {
         'majorDimension': 'ROWS',
