@@ -73,16 +73,16 @@ class CRUDBase:
         await session.commit()
         return db_obj
 
-    async def get_charity_project_by_id(
+    async def get_by_id(
             self,
             project_id: int,
             session: AsyncSession
-    ) -> Optional[CharityProject]:
+    ):
         """Получения объекта по ID """
 
         db_project = await session.execute(
-            select(CharityProject).where(
-                CharityProject.id == project_id
+            select(self.model).where(
+                self.model.id == project_id
             )
         )
         return db_project.scalars().first()

@@ -6,16 +6,16 @@ from app.models import CharityProject
 
 
 def check_none(
-        obj: str
+        obj: str,
+        name: str
 ) -> None:
     """Проверка на пустое поле"""
 
-    if obj is None:
+    if obj is None or obj == ' ':
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail=f'Поле {obj} не может быть пустым'
+            detail=f'Поле {name} не может быть пустым'
         )
-
 
 async def check_name_duplicate(
         project_name: str,
@@ -59,7 +59,7 @@ async def check_delete_investing_project(
 ) -> CharityProject:
     """проверка, что в проекте нет инвестиций"""
 
-    charity_project = await charity_project_crud.get_charity_project_by_id(
+    charity_project = await charity_project_crud.get_by_id(
         project_id, session
     )
 
@@ -79,7 +79,7 @@ async def check_delete_close_project(
 ) -> CharityProject:
     """проверка, что закрытый проект нельзя удалить"""
 
-    charity_project = await charity_project_crud.get_charity_project_by_id(
+    charity_project = await charity_project_crud.get_by_id(
         project_id, session
     )
 
@@ -99,7 +99,7 @@ async def check_update_close_project(
 ) -> CharityProject:
     """Проверка, что проект не закрыт"""
 
-    charity_project = await charity_project_crud.get_charity_project_by_id(
+    charity_project = await charity_project_crud.get_by_id(
         project_id, session
     )
 
@@ -119,7 +119,7 @@ async def check_update_full_amount_project(
 ):
     """Проверка корректности требуемой суммы"""
 
-    charity_project = await charity_project_crud.get_charity_project_by_id(
+    charity_project = await charity_project_crud.get_by_id(
         project_id, session
     )
     if full_amount:

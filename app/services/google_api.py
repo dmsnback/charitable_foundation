@@ -1,3 +1,4 @@
+from copy import deepcopy
 from datetime import datetime
 from typing import List, Any
 
@@ -41,14 +42,12 @@ async def spreadsheets_create(
 ) -> tuple[Any, Any]:
     now_date_time = datetime.now().strftime(FORMAT)
     service = await wrapper_services.discover('sheets', 'v4')
-    spreadsheet_body = SPREADSHEET_BODY.copy()
+    spreadsheet_body = deepcopy(SPREADSHEET_BODY)
     spreadsheet_body['properties']['title'] = f'Отчет от {now_date_time}'
     response = await wrapper_services.as_service_account(
         service.spreadsheets.create(json=spreadsheet_body)
     )
-    spreadsheet_id = response['spreadsheetId']
-    spreadsheet_url = response['spreadsheetUrl']
-    return spreadsheet_id, spreadsheet_url
+    return response['spreadsheetId'], response['spreadsheetUrl']
 
 
 async def set_user_permissions(
@@ -77,7 +76,7 @@ async def spreadsheets_update_value(
 ) -> None:
     now_date_time = datetime.now().strftime(FORMAT)
     service = await wrapper_services.discover('sheets', 'v4')
-    table_value = TABLE_VALUES.copy()
+    table_value = deepcopy(TABLE_VALUES)
     table_value[0].append(now_date_time)
 
     table_values = [
@@ -92,7 +91,7 @@ async def spreadsheets_update_value(
         'values': table_values
     }
     row_count = len(table_values)
-    column_count = max(len(row) for row in table_value)
+    column_count = max(map(len, table_value))
     if row_count > ROW_COUNT or column_count > COLUMN_COUNT:
         raise ValueError(
             f'Таблица состоит из {ROW_COUNT} строк и {COLUMN_COUNT} столбцов.'
@@ -102,7 +101,7 @@ async def spreadsheets_update_value(
     await wrapper_services.as_service_account(
         service.spreadsheets.values.update(
             spreadsheetId=spreadsheet_id,
-            range=f'R1C1:R{ROW_COUNT}C{COLUMN_COUNT}',
+            range=f'R1C1:R{row_count}C{column_count}',
             valueInputOption='USER_ENTERED',
             json=update_body
         )

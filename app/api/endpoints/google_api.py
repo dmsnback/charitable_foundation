@@ -13,9 +13,6 @@ from app.services.google_api import (
 )
 
 
-URL_GOOGLE_SHEETS = 'https://docs.google.com/spreadsheets/d/'
-
-
 router = APIRouter()
 
 
@@ -31,15 +28,17 @@ async def get_report(
     projects = await charity_project_crud.get_projects_by_completion_rate(
         session
     )
-    spreadsheet = await spreadsheets_create(wrapper_services)
-    await set_user_permissions(spreadsheet[0], wrapper_services)
+    spreadsheet_id, spreadsheet_url = await spreadsheets_create(
+        wrapper_services
+    )
+    await set_user_permissions(spreadsheet_id, wrapper_services)
     try:
         await spreadsheets_update_value(
-            spreadsheet[0], projects, wrapper_services
+            spreadsheet_id, projects, wrapper_services
         )
     except ValueError as error:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=str(error)
         )
-    return spreadsheet[1]
+    return spreadsheet_url

@@ -1,14 +1,13 @@
 from datetime import datetime
 from typing import List
 
-from app.core.db import PreBaseChairityAndDonaton
+from app.models import PreBaseChairityAndDonaton
 
 
 def investing_process(
     target: PreBaseChairityAndDonaton,
     sources: List[PreBaseChairityAndDonaton]
 ) -> List[PreBaseChairityAndDonaton]:
-    objects = []
     for source in sources:
         free_amount = min(
             target.full_amount - target.invested_amount,
@@ -19,5 +18,4 @@ def investing_process(
             if new_source.full_amount == new_source.invested_amount:
                 new_source.fully_invested = 1
                 new_source.close_date = datetime.now()
-        objects.append(source)
-    return objects
+    return sources

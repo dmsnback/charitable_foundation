@@ -34,16 +34,21 @@ async def create_new_charity_project(
         charity_project: CharityProjectCreate,
         session: AsyncSession = Depends(get_async_session),
 ):
-    check_none(charity_project.name)
-    check_none(charity_project.description)
+    check_none(charity_project.name, "'name'")
+    check_none(charity_project.description, "'description'")
     await check_name_duplicate(charity_project.name, session)
     new_charity_project = await charity_project_crud.create(
         charity_project,
         session,
         commit=True
     )
-    sources = await charity_project_crud.get_open_objects(Donation, session)
-    session.add_all(investing_process(new_charity_project, sources))
+
+    session.add_all(
+        investing_process(
+            new_charity_project,
+            await charity_project_crud.get_open_objects(Donation, session)
+        )
+    )
     await session.commit()
     await session.refresh(new_charity_project)
     return new_charity_project
