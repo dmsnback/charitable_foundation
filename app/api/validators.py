@@ -14,7 +14,7 @@ def check_none(
     if obj is None or obj == ' ':
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail=f'Поле {name} не может быть пустым'
+            detail=f'Поле {name} не может быть пустым!'
         )
 
 async def check_name_duplicate(
