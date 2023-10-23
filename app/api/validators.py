@@ -17,6 +17,7 @@ def check_none(
             detail=f'Поле {name} не может быть пустым!'
         )
 
+
 async def check_name_duplicate(
         project_name: str,
         session: AsyncSession
