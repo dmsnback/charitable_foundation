@@ -11,7 +11,7 @@ def check_none(
 ) -> None:
     """Проверка на пустое поле"""
 
-    if obj is None or obj == ' ':
+    if obj is None or obj == '':
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail=f'Поле {name} не может быть пустым!'

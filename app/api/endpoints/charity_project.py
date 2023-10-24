@@ -34,8 +34,8 @@ async def create_new_charity_project(
         charity_project: CharityProjectCreate,
         session: AsyncSession = Depends(get_async_session),
 ):
-    check_none(charity_project.name, "'name'")
-    check_none(charity_project.description, "'description'")
+    check_none(charity_project.name, 'name')
+    check_none(charity_project.description, 'description')
     await check_name_duplicate(charity_project.name, session)
     new_charity_project = await charity_project_crud.create(
         charity_project,

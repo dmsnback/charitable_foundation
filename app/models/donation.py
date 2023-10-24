@@ -8,4 +8,8 @@ class Donation(PreBaseChairityAndDonaton):
     comment = Column(Text)
 
     def __repr__(self):
-        return 'Пожертвование принято!'
+        return (
+            f'Пожертвование принято от {self.user_id}\n'
+            f'Комментарий: {self.comment}\n'
+            f'{super().__repr__()}'
+        )

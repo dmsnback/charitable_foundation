@@ -8,4 +8,8 @@ class CharityProject(PreBaseChairityAndDonaton):
     description = Column(Text, nullable=False)
 
     def __repr__(self):
-        return f'Проект {self.name} создан.'
+        return (
+            f'Проект {self.name} создан.\n'
+            f'{self.description}\n'
+            f'{super().__repr__()}'
+        )
